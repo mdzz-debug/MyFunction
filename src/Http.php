@@ -31,4 +31,20 @@ class Http
         return $result;
     }
 
+    /**
+     * Echo JSON
+     * @param int $code JSON code
+     * @param array $data JSON data
+     * @param string $msg JSON message
+     * @param int $flag JSON encode flag
+     */
+    public static function echoJson($code = 0, $data = [], $msg = '', $flag = 320)
+    {
+        echo json_encode([
+            'code' => $code,
+            'data' => $data,
+            'msg' => $msg
+        ], $flag);
+    }
+
 }
