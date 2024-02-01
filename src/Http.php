@@ -1,8 +1,8 @@
 <?php
 
-namespace mdzz\MyFunction\MyFunction;
+namespace mdzz\MF;
 
-class MyFunction
+class Http
 {
     /**
      * Curl request
