@@ -7,9 +7,10 @@ class Http
     /**
      * Curl request
      * @param string $url Request url
-     * @param string $method GET|POST|PUT|DELETE
-     * @param array|string $data Request data
-     * @param array $headers Request headers
+     * @param string $method GET|POST|PUT|DELETE, default GET
+     * @param array|string $data Request data, default []
+     * @param array $headers Request headers, default []
+     * @return bool|string Request result
      */
     public static function curlRequest($url, $method = 'GET', $data = [], $headers = [])
     {
@@ -37,6 +38,7 @@ class Http
      * @param array $data JSON data
      * @param string $msg JSON message
      * @param int $flag JSON encode flag
+     * @return void Echo JSON
      */
     public static function echoJson($code = 0, $data = [], $msg = '', $flag = 320)
     {

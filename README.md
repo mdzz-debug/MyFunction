@@ -3,6 +3,11 @@
 ### 简介
 PHP常用函数封装
 
+### 技术支持
+1. Qrcode
+
+
+### 使用文档
 1. 文件处理类
     + saveFile 保存文件
       ```php
@@ -28,4 +33,14 @@ PHP常用函数封装
       // $data 请求数据，可选，默认为空数组
       // $headers 请求头，可选，默认为空数组
       File::curlRequest($url, $method = 'GET', $data = [], $headers = []);
+      ```
+3. QRCode类
+   + createQRCode 生成二维码
+      ```php
+      // $text 二维码内容，必填
+      // $path 二维码保存路径和名称，可选，默认为二进制输出
+      // $level 二维码容错级别，可选，默认为 3
+      // $size 二维码大小，可选，默认为10
+      // $margin 二维码外边距，可选，默认为1
+      QRCode::createQRCode($text, $path, $level, $size, $margin);
       ```

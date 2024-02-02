@@ -2,7 +2,9 @@
 
 namespace mdzz\MF;
 
-class File
+use mdzz\MF\package\BaseMf;
+
+class File extends BaseMf
 {
     /**
      * save file by $_FILES
@@ -10,16 +12,14 @@ class File
      * @param string $path save path
      * @param string $filename save filename
      * @param string $suffix save suffix
+     * @return string|bool file path
      */
     public static function saveFile($file, $path = '', $filename = '', $suffix = '')
     {
         if (empty($file) || is_string($file) || !is_uploaded_file($file['tmp_name'])) {
             return false;
         }
-        $path = rtrim(empty($path) ? './' : $path, '/') . '/';
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
-        }
+        $path = self::checkPath($path);
         $suffix = strtolower(empty($suffix) ? pathinfo($file['name'], PATHINFO_EXTENSION) : trim($suffix));
         $filename = (empty($filename) ? pathinfo($file['name'], PATHINFO_FILENAME) : $filename) . '.' . $suffix;
 
@@ -33,11 +33,12 @@ class File
     /**
      * compress the picture
      * @param string $img image path
-     * @param int $max_width max width
-     * @param int $max_height max height
-     * @param int $quality quality
+     * @param int $max_width max width, default 0
+     * @param int $max_height max height, default 0
+     * @param int $quality quality, default 75
+     * @return string|bool image path
      */
-    public static function compressImage($img, $max_width = 0, $max_height = 0, $quality = 90)
+    public static function compressImage($img, $max_width = 0, $max_height = 0, $quality = 75)
     {
         if (empty($img) || !file_exists($img)) {
             return false;
