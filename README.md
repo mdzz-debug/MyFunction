@@ -44,3 +44,5 @@ PHP常用函数封装
       // $margin 二维码外边距，可选，默认为1
       QRCode::createQRCode($text, $path, $level, $size, $margin);
       ```
+4. Redis 服务类
+    
