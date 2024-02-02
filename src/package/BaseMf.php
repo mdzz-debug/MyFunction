@@ -23,7 +23,6 @@ class BaseMf
         } catch (\Exception $e) {
             return false;
         }
-
     }
 
 }
