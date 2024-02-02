@@ -6,6 +6,11 @@ PHP常用函数封装
 ### 技术支持
 1. Qrcode
 
+### Composer安装
+[packagist 访问](https://packagist.org/packages/mdzz/my-function)
+```shell
+composer require mdzz/my-function
+```
 
 ### 使用文档
 1. 文件处理类
