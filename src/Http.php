@@ -2,7 +2,9 @@
 
 namespace mdzz\MF;
 
-class Http
+use mdzz\MF\package\BaseMf;
+
+class Http extends BaseMf
 {
     /**
      * Curl request

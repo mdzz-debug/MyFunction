@@ -31,47 +31,39 @@ class File extends BaseMf
     }
 
     /**
-     * compress the picture
-     * @param string $img image path
-     * @param int $max_width max width, default 0
-     * @param int $max_height max height, default 0
-     * @param int $quality quality, default 75
-     * @return string|bool image path
+     * get file size
+     * @param string $file file path or url
+     * @param string $unit size unit (B, KB, MB, GB, TB, PB), default KB
+     * @param string|false $compare compare string, default false, example: '<200'
+     * @return false|string file size
      */
-    public static function compressImage($img, $max_width = 0, $max_height = 0, $quality = 75)
+    public static function getFileSize($file, $unit = 'KB', $compare = false)
     {
-        if (empty($img) || !file_exists($img)) {
-            return false;
-        }
-        $info = getimagesize($img);
-        if ($info === false) {
-            return false;
-        }
-        $type = image_type_to_extension($info[2], false);
-        $fun = "imagecreatefrom{$type}";
-        if (!function_exists($fun)) {
-            return false;
-        }
-        $image = $fun($img);
-        if ($max_width > 0 && $max_height > 0) {
-            $width = $info[0];
-            $height = $info[1];
-            if ($width > $max_width || $height > $max_height) {
-                $ratio_width = $max_width / $width;
-                $ratio_height = $max_height / $height;
-                $ratio = min($ratio_width, $ratio_height);
-                $new_width = (int)$width * $ratio;
-                $new_height = (int)$height * $ratio;
-                $new_image = imagecreatetruecolor($new_width, $new_height);
-                imagecopyresampled($new_image, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-                imagedestroy($image);
-                $image = $new_image;
+        if (strpos($file, 'http') === 0) {
+            $file = file_get_contents($file);
+            $size = strlen($file);
+        } else {
+            if (is_file($file)) {
+                $size = filesize($file);
+            } else {
+                return false;
             }
         }
-        $fun = "image{$type}";
-        $fun($image, $img, $quality);
-        imagedestroy($image);
-        return $img;
+
+        if ($size === false) {
+            return false;
+        }
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+        $i = array_search($unit, $units);
+        if ($i === false) {
+            return false;
+        }
+        $size /= 1024 ** $i;
+        if (!$compare || eval("return round($size, 2) $compare;")) {
+            return round($size, 2) . $unit;
+        } else {
+            return false;
+        }
     }
 
 }
